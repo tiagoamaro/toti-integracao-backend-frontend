@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar tarefa</title>
+</head>
+<body>
+    <h1>Atualizar tarefa</h1>
+    
+    <label>
+        ID da tarefa
+        <input type="text" name="id">
+    </label>
+
+    <br />
+
+    <label>
+        Nova descrição da tarefa
+        <input type="text" name="description">
+    </label>
+
+    <br />
+    <button id="update">Atualizar</button>
+
+    <main></main>
+
+    <hr>
+    <a href="./index.html">Voltar</a>
+
+    <script>
+        const idInput = document.querySelector("input[name='id']")
+        const descriptionInput = document.querySelector("input[name='description']")
+        const updateButton = document.querySelector("#update")
+        const main = document.querySelector("main")
+        const taskPath = "http://localhost:3000/tasks/:id"
+
+        updateButton.addEventListener("click", () => {
+            const path = taskPath.replace(":id", idInput.value)
+
+            // We'll use the PUT HTTP method instead of GET, which is the default.
+            // When PUTting data, we need to send data with it!
+            fetch(path, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" }, // Let's tell the backend server we're sending a JSON!
+                body: JSON.stringify({ description: descriptionInput.value })
+            }).then(response => response.json())
+              .then(() => {
+                  main.textContent = "Tarefa atualizada com sucesso!"
+                  descriptionInput.value = ""
+                  idInput.value = ""
+              })
+        })
+    </script>
+</body>
+</html>

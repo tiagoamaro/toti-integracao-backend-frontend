@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar tarefa</title>
+</head>
+<body>
+    <h1>Criar tarefa</h1>
+
+    <label>
+        Descrição da tarefa
+        <input type="text" name="description">
+    </label>
+    <button id="create">Criar</button>
+
+    <main></main>
+
+    <hr>
+    <a href="./index.html">Voltar</a>
+
+    <script>
+        const main = document.querySelector("main")
+        const createButton = document.querySelector("#create")
+        const descriptionInput = document.querySelector("input[name='description']")
+
+        createButton.addEventListener("click", () => {
+            // We'll use the POST HTTP method instead of GET, which is the default.
+            // When POSTing data, we need to send data with it!
+            fetch("http://localhost:3000/tasks", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }, // Let's tell the backend server we're sending a JSON!
+                body: JSON.stringify({ description: descriptionInput.value })
+            }).then(response => response.json())
+              .then(() => {
+                  main.textContent = "Tarefa criada com sucesso!"
+                  descriptionInput.value = ""
+              })
+        })
+    </script>
+</body>
+</html>

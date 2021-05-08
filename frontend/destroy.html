@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apagar tarefa</title>
+</head>
+<body>
+    <h1>Apagar tarefa</h1>
+
+    <label>
+        ID da tarefa
+        <input type="text" name="id">
+    </label>
+    <button id="destroy">Apagar</button>
+    
+    <main>
+    </main>
+
+    <hr>
+    <a href="./index.html">Voltar</a>
+
+    <script>
+        const main = document.querySelector("main")
+        const destroyButton = document.querySelector("#destroy")
+        const idInput = document.querySelector("input[name='id']")
+        const taskPath = "http://localhost:3000/tasks/:id"
+
+        // Instead of promises, let's use the modern async/await syntax.
+        async function deleteTask(taskId) {
+            const path = taskPath.replace(":id", taskId)
+
+            const response = await fetch(path, { method: "DELETE" })
+
+            if (response.status === 200) {
+                main.textContent = "Tarefa apagada com sucesso!"
+                idInput.value = ""
+            } else {
+                main.textContent = "Tarefa não encontrada"
+            }
+        }
+
+        destroyButton.addEventListener("click", () => {
+            deleteTask(idInput.value)
+        })
+    </script>
+</body>
+</html>

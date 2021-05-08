@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listando tarefas</title>
+</head>
+<body>
+    <h1>Listando tarefas</h1>
+
+    <main>
+    </main>
+
+    <hr>
+    <a href="./index.html">Voltar</a>
+
+    <script>
+        const main = document.querySelector("main")
+
+        // Let's create an unordered list
+        const list = document.createElement("ul")
+
+        // Let's request the GET /tasks endpoint
+        fetch("http://localhost:3000/tasks")
+            .then(response => response.json())
+            .then(result => {
+                // Now that we have the JSON, let's create a list item for them
+                const tasks = result.tasks
+
+                for (const task of tasks) {
+                    const listItem = document.createElement("li")
+
+                    const text = `ID: ${task.id} - ${task.description}`
+
+                    // Let's create the list item and append them to the list
+                    listItem.append(text)
+                    list.append(listItem)
+                }
+
+                // Let's now append the list
+                main.append(list)
+            })
+    </script>
+</body>
+</html>

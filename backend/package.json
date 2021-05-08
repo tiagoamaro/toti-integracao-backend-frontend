@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/tiagoamaro/toti-nodejs-exercicio-2020#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "sequelize": "^6.3.4",
     "sqlite3": "^5.0.0"

@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const { Sequelize, DataTypes } = require('sequelize')
 const Task = require('./models/task')
 
@@ -8,6 +9,9 @@ const tasks = Task(sequelize, DataTypes)
 
 // We need to parse JSON coming from requests
 app.use(express.json())
+
+// Let's accept requests from anywhere
+app.use(cors())
 
 // List tasks
 app.get('/tasks', async (req, res) => {
